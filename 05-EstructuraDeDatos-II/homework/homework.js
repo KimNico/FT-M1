@@ -1,5 +1,8 @@
 "use strict";
 
+const { captureRejections } = require("@11ty/eleventy/src/Util/AsyncEventEmitter");
+const readingTime = require("henry-reading-time/lib/reading-time");
+
 /*
 Implementar la clase LinkedList, definiendo los siguientes métodos:
   - add: agrega un nuevo nodo al final de la lista;
@@ -11,9 +14,70 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
 
-function LinkedList() {}
+function LinkedList() {
+  this.head = null
+}
 
-function Node(value) {}
+function Node(value) {
+  this.value = value;
+  this.next = null
+}
+
+LinkedList.prototype.search = function(value){
+let current = this.head
+
+while(current){
+  if(typeof value === 'function'){
+  if(value(current.value)){
+    return current.value
+  }
+}else{
+   if(current.value === value){
+    return value
+}
+
+  }
+  current = current.next}
+  
+
+return null
+}
+
+LinkedList.prototype.remove = function(value){
+  let current = this.head
+  
+  if(!current) return null
+
+  if(!current.next){
+    let val = current.value
+    this.head =null
+    return val
+  }
+
+  while(current.next.next){
+    current = current.next
+  }
+  let val = current.next.value
+  current.next = null
+  return val
+
+}
+
+
+LinkedList.prototype.add = function(value){
+  let node = new Node(value)
+  let current = this.head
+if(!current){
+  this.head = node
+  return node
+}
+while(current.next){
+  current = current.next
+  }
+  current.next=node
+  return node
+};
+
 
 /*
 Implementar la clase HashTable.
@@ -30,7 +94,44 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+function HashTable() {
+  this.numBuckets = 35
+  this.bucket = []
+}
+
+HashTable.prototype.hash = function(key){// funcion para hashear el input
+let res = 0
+for(let i =0; i<key.length;i++){
+  res = res +key.charCodeAt(i);
+}
+return res % this.numBuckets
+
+}
+
+HashTable.prototype.set = function(key,value){ //Setea el espacio en memoria en donde se va a almacenar el input hasheado controlando colisiones
+  if(typeof key != 'string') throw new TypeError('Keys must be strings')
+let bucketNum = this.hash(key)
+if(!this.bucket[bucketNum]){
+  this.bucket[bucketNum] = {}
+}
+this.bucket[bucketNum][key] = value //guarda el value dentro del key que esta dentro del bucket para que no colisione y arma una nueva estructura dentro del bucket
+}
+
+HashTable.prototype.get = function(key){
+  let bucketNum = this.hash(key) //Hashea el input y para obtener nuevamente el valor y lo devuelve
+  return this.bucket[bucketNum][key] //Busca dentro del bucket pero a su vez busca el objeto guardado dentro del bucket para no agarrar todo el arr
+  
+}
+
+HashTable.prototype.hasKey = function(key){
+  let bucketNum = this.hash(key)
+  if(this.bucket[bucketNum][key]){
+    return true
+  }else{
+    return false
+  }
+  
+}
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
