@@ -1,5 +1,7 @@
 "use strict";
 
+const { escapeHtml } = require("markdown-it/lib/common/utils");
+
 /*
  Implementar la clase BinarySearchTree, definiendo los siguientes métodos recursivos:
   - size: retorna la cantidad total de nodos del árbol
@@ -33,7 +35,7 @@ BinarySearchTree.prototype.size = function(value){
     return this.right.size()
   }
 
-  return 1+ (this.left.size() + this.right.size())
+  return (this.left.size() + this.right.size())
 
 
 }
@@ -58,38 +60,24 @@ BinarySearchTree.prototype.contains = function(value){
   console.log("root");
   
   if(value > this.value){
-    if(!this.right ){
+    if(this.right === value){
       console.log("right");
-      return false
+      return true
     }else{
       console.log("rc 1");
       return this.right.contains(value)
     }
   }else{
-    if(!this.left){
+    if(this.left === value){
       console.log("left");
-      return false
+      return true
     }else{
       console.log("rc 2");
       return this.left.contains(value)
     }
   }
 }
-BinarySearchTree.prototype.depthFirstForEach = function(cb, order){
-  if(!order || order === 'in-order'){
-    if(this.left) this.left.depthFirstForEach(cb,order)
-    cb(this.value)
-    if(this.right) this.right.depthFirstForEach(cb,order)
-  }else if(order === 'pre-order'){
-    cb(this.value)
-    if(this.left) this.left.depthFirstForEach(cb,order)
-    if(this.right) this.right.depthFirstForEach(cb,order)
-  }else{
-    if(this.left) this.left.depthFirstForEach(cb,order)
-    if(this.right) this.right.depthFirstForEach(cb,order)
-    cb(this.value)
-  }
-
+BinarySearchTree.prototype.depthFirstForEach = function(){
   
 }
 BinarySearchTree.prototype.breadthFirstForEach = function(){
@@ -102,3 +90,17 @@ BinarySearchTree.prototype.breadthFirstForEach = function(){
 module.exports = {
   BinarySearchTree,
 };
+
+
+let arbol = new BinarySearchTree(30)
+
+
+arbol.insert(15)
+arbol.insert(45)
+arbol.insert(31)
+arbol.insert(26)
+arbol.insert(4)
+arbol.insert(19)
+arbol.insert(15)
+
+arbol.contains(4)
