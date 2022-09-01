@@ -10,27 +10,47 @@ function factorear(num) {
   let val = 2
  
 
+  while(num > 1){
+    if(num%val == 0){
+      num = num/val
+      res.push(val)
+    }else{
+      val++
+    }
+  
+  }
+  return res
+
 }
 
 function bubbleSort(array) {
   // Implementar el método conocido como bubbleSort para ordenar de menor a mayor
   // el array recibido como parámetro
   // Devolver el array ordenado resultante
-  // Tu código:
-  let swap
+  // Tu código:    
+  let swap = true
 
-  while (swap) {
-    swap = false
-    for (let i = 0; i < num.length; i++) {
-      if(num[i]){
-  
+  while(swap){
+    swap = false  
+    for (let i = 0; i < array.length -1 ; i++) {
+      if(array[i]> array[i+1]){
+        let aux = array[i+1]
+        array[i+1] = array[i]
+        array[i] = aux
+        swap = true
       }
       
     }
-    
   }
-
+  return array
+  
 }
+
+//INSERTIONSORT EXPLICACION
+//  0  1  2  3  4
+// [5, 1, 4, 2, 8]
+//     i  
+//  j
 
 
 function insertionSort(array) {
@@ -38,9 +58,26 @@ function insertionSort(array) {
   // el array recibido como parámetro utilizando arreglos
   // Devolver el array ordenado resultante
   // Tu código:
-  
+  for (let i = 0; i < array.length; i++) {
+      for (let j = 0; j < array.length; j++) {
+        if (array[i]< array[j]) {
+          let aux = array[j]
+          array[j] = array[i]
+          array[i] = aux
+        }else{
+          array[i+1]
+          array[j+1]
+        }
+      }
+  }
+  return array
 
 }
+
+//EXPLICACION SELECTION SORT
+//[5, 1, 4, 2, 8]
+// A  i
+//             j
 
 
 function selectionSort(array) {
@@ -48,6 +85,19 @@ function selectionSort(array) {
   // el array recibido como parámetro utilizando dos arreglos
   // Devolver el array ordenado resultante
   // Tu código:
+  for (let i = 0; i < array.length; i++) {
+    let min = i
+    for (let j = i+1; j < array.length ; j++) {
+      if(array[j]<array[min]){
+        min = j  
+      }
+      
+    }
+    let aux = array[i]
+    array[i] = array[min]
+    array[min] = aux
+}
+  return array
 
 }
 

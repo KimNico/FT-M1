@@ -7,6 +7,11 @@ function quickSort(array) {
   // Devolver el array ordenado resultante
   // Tu código:
 
+  for (let i = 0; i < array.length; i++) {
+    let random = Math.floor(Math.random()*(i+1))
+       
+     }
+
 }
 
 function mergeSort(array) {
@@ -14,6 +19,7 @@ function mergeSort(array) {
   // el array recibido como parámetro
   // Devolver el array ordenado resultante
   // Tu código:
+ 
 
 }
 
